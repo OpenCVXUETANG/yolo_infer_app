@@ -2,6 +2,8 @@
 QT5 + TensorRT10.x + OpenCV4.10 + VS2022
 Jetson Orin Nano C++ supported!
 YOLO Segmenat Models including YOLOv8, YOLO11, YOLO26 can deploy with it
+![](ui_form.jpg)
+![](run_demo.jpg)
 
 #### 安装指南
 下载代码，导入到新建的QT Creator项目中即可，选择全部覆盖，然后自己依赖库安装与路径修改即可运行。
