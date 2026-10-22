@@ -2,6 +2,13 @@
 QT5 + TensorRT10.x + OpenCV4.10 + VS2022
 Jetson Orin Nano C++ supported!
 YOLO Segmenat Models including YOLOv8, YOLO11, YOLO26 can deploy with it
+
+### 第三方库依赖
+```
+- OpenCV4.x\OpenCV5.x
+- CUDA11.x\CUDA12.x\CUDA13.x
+- TensorRT8.x\TensorRT10.x
+```
 ![](ui_form.jpg)
 ![](run_demo.jpg)
 
