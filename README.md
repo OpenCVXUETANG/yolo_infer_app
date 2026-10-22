@@ -19,8 +19,6 @@ YOLO Segmenat Models including YOLOv8, YOLO11, YOLO26 can deploy with it
 模型提供了ONNX格式，engine格式模型跟设备算力是强相关，无法做到设备兼容，所以需要使用下面的命令行转换为engine格式：
 trtexec.exe --onnx=yolov8_cu.onnx --saveEngine=yolov8_cu.engine
 
-### 特别提示 - 新手慎入！！
-
 ### OpenCV学堂课程主页
 https://appetjpz4tj8166.h5.xet.pomoho.com/
 
