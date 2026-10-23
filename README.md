@@ -19,6 +19,40 @@ YOLO Segmenat Models including YOLOv8, YOLO11, YOLO26 can deploy with it
 模型提供了ONNX格式，engine格式模型跟设备算力是强相关，无法做到设备兼容，所以需要使用下面的命令行转换为engine格式：
 trtexec.exe --onnx=yolov8_cu.onnx --saveEngine=yolov8_cu.engine
 
+### jetson orin nano移植指南(TensorRT8.5.x版本代码修改）
+把yolo11_seg_tensorrt10.cpp 代码中的从44行 到 66行替换为下面的代码
+```
+int input_index = engine->getBindingIndex("images");
+int output_index = engine->getBindingIndex("output0");
+int mask_index = engine->getBindingIndex("output1");
+
+// 获取输入维度信息 NCHW=1x3x640x640
+this->input_h = engine->getBindingDimensions(input_index).d[2];
+this->input_w = engine->getBindingDimensions(input_index).d[3];
+printf("inputH : %d, inputW: %d \n", input_h, input_w);
+
+// 获取输出维度信息
+this->output_h = engine->getBindingDimensions(output_index).d[1];
+this->output_w = engine->getBindingDimensions(output_index).d[2];
+std::cout << "out data format: " << output_h << "x" << output_w << std::endl;
+
+// 创建GPU显存输入/输出缓冲区
+std::cout << " input/outpu : " << engine->getNbBindings() << std::endl;
+cudaMalloc(&buffers[input_index], this->input_h * this->input_w * 3 * sizeof(float));
+cudaMalloc(&buffers[output_index], this->output_h *this->output_w * sizeof(float));
+cudaMalloc(&buffers[mask_index], 32 * 25600 * sizeof(float));
+```
+推理函数从
+```
+context->executeV2(buffers);
+```
+替换为
+```
+// 推理
+context->enqueueV2(buffers, stream, nullptr);
+```
+其它保持不变！
+
 ### OpenCV学堂课程主页
 https://appetjpz4tj8166.h5.xet.pomoho.com/
 
