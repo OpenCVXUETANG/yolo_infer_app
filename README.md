@@ -21,7 +21,7 @@ trtexec.exe --onnx=yolov8_cu.onnx --saveEngine=yolov8_cu.engine
 
 ### jetson orin nano移植指南(TensorRT8.5.x版本代码修改）
 把yolo11_seg_tensorrt10.cpp 代码中的从44行 到 66行替换为下面的代码
-```
+```cpp
 int input_index = engine->getBindingIndex("images");
 int output_index = engine->getBindingIndex("output0");
 int mask_index = engine->getBindingIndex("output1");
@@ -43,11 +43,11 @@ cudaMalloc(&buffers[output_index], this->output_h *this->output_w * sizeof(float
 cudaMalloc(&buffers[mask_index], 32 * 25600 * sizeof(float));
 ```
 推理函数从
-```
+```cpp
 context->executeV2(buffers);
 ```
 替换为
-```
+```cpp
 // 推理
 context->enqueueV2(buffers, stream, nullptr);
 ```
